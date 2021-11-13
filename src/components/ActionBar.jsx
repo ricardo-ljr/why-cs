@@ -38,10 +38,10 @@ export function ActionBar() {
             <span>Search</span>
           </a>
         </Link>
-        <Link href="/post">
+        <Link href="/new">
           <a
             className={`text-${
-              router.pathname === "/post" ? "blue-700" : "gray-500"
+              router.pathname === "/new" ? "blue-700" : "gray-500"
             } flex flex-col items-center`}
           >
             <FiEdit size={28} />

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function Question({ question, answered = false }) {
   return (
-    <Link href="/">
+    <Link href="/questions/1">
       <a>
         <article className="mt-2 w-full p-4 bg-white shadow-lg">
           <div className="flex justify-between mb-4">

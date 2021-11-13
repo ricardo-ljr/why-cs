@@ -2,7 +2,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/client";
 import { FiBell, FiLogOut } from "react-icons/fi";
 
-export function Header({ title, backable = false }) {
+export function Header({ title }) {
   return (
     <header className="bg-white w-full p-4 shadow-lg">
       <section className="flex justify-between items-center">
