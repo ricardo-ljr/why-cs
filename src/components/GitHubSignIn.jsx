@@ -10,7 +10,7 @@ export function GithubSignIn() {
       onClick={() => signIn("github")}
     >
       <Image src={githubImg} alt="Why CS?" />
-      Sign in with Google
+      Sign in with GitHub
     </button>
   );
 }

@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/client";
+import { signOut, useSession } from "next-auth/client";
 import Image from "next/image";
 
 import logoImg from "../assets/logo.svg";
@@ -15,6 +15,11 @@ export default function SignIn() {
       <Image src={logoImg} alt="Why CS?" />
 
       <section>
+        {session && (
+          <button onClick={() => signOut()} className="p-4 bg-blue-400">
+            Sign out
+          </button>
+        )}
         <GoogleSignIn />
         <GithubSignIn />
         <p className="text-sm text-center">
