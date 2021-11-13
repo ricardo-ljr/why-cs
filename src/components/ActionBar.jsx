@@ -6,7 +6,7 @@ export function ActionBar() {
   const router = useRouter();
 
   return (
-    <footer className="bg-white w-full p-4 border-t-2 border-gray-300 shadow-lg">
+    <footer className="bg-white w-full p-4 border-t-2 border-gray-300 shadow-lg fixed bottom-0">
       <nav className="flex justify-around">
         <Link href="/home">
           <a
