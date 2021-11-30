@@ -1,4 +1,3 @@
-import { signOut } from "next-auth/client";
 import { FiArrowLeft, FiSend } from "react-icons/fi";
 import { useRouter } from "next/router";
 

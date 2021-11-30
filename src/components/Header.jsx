@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { FiBell, FiArrowLeft, FiLogOut } from "react-icons/fi";
 
 export function Header({ title, searchQuestions = undefined }) {
-  if (title === 'Search') {
-    const router = useRouter();
+  const router = useRouter();
 
+  if (title === 'Search') {
     return (
       <header className="bg-white w-full p-4 shadow-lg">
       <section className="flex gap-3 items-center">
