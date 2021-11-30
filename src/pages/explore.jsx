@@ -44,7 +44,7 @@ export default function Explore({ session }) {
       <Head>
         <title>Why CS? - Explore</title>
       </Head>
-      <div className="bg-gray-50 min-h-full w-full max-w-md mx-auto flex flex-col">
+      <div className="bg-gray-50 min-h-screen w-full max-w-md mx-auto flex flex-col">
         <Header title="Explore" />
         <main className="mt-4 flex-grow mb-32">
           {questions.map((question, id) => (

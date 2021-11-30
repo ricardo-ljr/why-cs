@@ -1,8 +1,29 @@
 import Link from "next/link";
 import { signOut } from "next-auth/client";
-import { FiBell, FiLogOut } from "react-icons/fi";
+import { useRouter } from 'next/router';
+import { FiBell, FiArrowLeft, FiLogOut } from "react-icons/fi";
 
-export function Header({ title }) {
+export function Header({ title, searchQuestions = undefined }) {
+  if (title === 'Search') {
+    const router = useRouter();
+
+    return (
+      <header className="bg-white w-full p-4 shadow-lg">
+      <section className="flex gap-3 items-center">
+        <button className="text-gray-800" onClick={router.back}>
+          <FiArrowLeft size={24} />
+        </button>
+        <input
+          type="text"
+          className="w-full py-1 text-xl border-b-2 placeholder-gray-400 outline-none"
+          placeholder="Search Why CS"
+          onChange={searchQuestions}
+        />
+      </section>
+    </header>
+    );
+  }
+
   return (
     <header className="bg-white w-full p-4 shadow-lg">
       <section className="flex justify-between items-center">

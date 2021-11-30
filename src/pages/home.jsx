@@ -45,7 +45,7 @@ export default function Home({ session }) {
       <Head>
         <title>Why CS? - Home</title>
       </Head>
-      <div className="bg-gray-50 min-h-full w-full max-w-md mx-auto flex flex-col">
+      <div className="bg-gray-50 min-h-screen w-full max-w-md mx-auto flex flex-col">
         <HomeHeader user={session.user} />
         <main className="mt-8 flex-grow mb-32">
           <section className="w-full flex gap-5 px-4">
