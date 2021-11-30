@@ -62,7 +62,7 @@ const classes = [
   "CS 580",
 ]
 
-export function NewHeader({ setTitle, setClass, handleSubmit }) {
+export function NewHeader({ setTitle, setClass, handleSubmit, reply = false }) {
   const router = useRouter()
 
   return (
@@ -72,13 +72,13 @@ export function NewHeader({ setTitle, setClass, handleSubmit }) {
           <button className="text-gray-800" onClick={router.back}>
             <FiArrowLeft size={24} />
           </button>
-          <h1 className="text-xl font-bold">Post new question</h1>
+          <h1 className="text-xl font-bold">{reply ? "Reply" : "Post new question" }</h1>
         </div>
         <button className="text-blue-700" onClick={handleSubmit}>
           <FiSend size={24} />
         </button>
       </section>
-      <section className="mt-8 flex flex-col gap-4">
+      {!reply && <section className="mt-8 flex flex-col gap-4">
         <input type="text" placeholder="Title" className="w-full outline-none" onChange={setTitle} />
         <select className="w-full text-gray-400 px-0 outline-none" onChange={setClass}>
             <option defaultChecked value="">Class</option>
@@ -86,7 +86,7 @@ export function NewHeader({ setTitle, setClass, handleSubmit }) {
             <option key={course} value={course}>{course}</option>
           ))}
         </select>
-      </section>
+      </section>}
     </header>
   );
 }
