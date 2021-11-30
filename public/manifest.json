@@ -5,7 +5,8 @@
     "scope": "/",
     "start_url": "/",
     "name": "Why CS?",
-    "short_name": "why",
+    "short_name": "whycs",
+    "prefer_related_applications": false,
     "description": "Find answers to your CS questions",
     "icons": [
         {
