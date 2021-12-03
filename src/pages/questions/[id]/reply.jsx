@@ -31,7 +31,7 @@ export default function New({ session, questionId }) {
 
     await supabase.from('questions').update({ replies: question.replies + 1 }).eq('id', questionId);
 
-    router.push(`/questions/${question}`);
+    router.push(`/questions/${questionId}`);
   }
 
   return (
