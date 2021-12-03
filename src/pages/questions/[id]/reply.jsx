@@ -7,7 +7,7 @@ import { supabase } from "../../../services/supabase";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/router";
 
-export default function New({ session, question }) {
+export default function New({ session, questionId }) {
   const router = useRouter();
   const [body, setBody] = useState("");
 
@@ -15,17 +15,21 @@ export default function New({ session, question }) {
     const reply = {
       id: uuid(),
       user_id: session.user.id,
-      question_id: question,
+      question_id: questionId,
       body,
     }
 
-    const { data, error } = await supabase.from('replies').insert([reply]);
+    const { error } = await supabase.from('replies').insert([reply]);
 
     if (error) {
       alert('Insertion failed');
       console.error(error.message);
       return;
     }
+
+    const { data: question } = await supabase.from('questions').select('*').eq('id', questionId).single();
+
+    await supabase.from('questions').update({ replies: question.replies + 1 }).eq('id', questionId);
 
     router.push(`/questions/${question}`);
   }
@@ -68,7 +72,7 @@ export const getServerSideProps = async ({ req, params }) => {
   return {
     props: {
       session,
-      question: params.id,
+      questionId: params.id,
     },
   };
 };
