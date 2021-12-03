@@ -1,9 +1,35 @@
 import Head from "next/head";
+import { useState } from "react";
 import { getSession } from "next-auth/client";
 
 import { NewHeader } from "../../../components/NewHeader";
+import { supabase } from "../../../services/supabase";
+import { v4 as uuid } from "uuid";
+import { useRouter } from "next/router";
 
-export default function New({ session }) {
+export default function New({ session, question }) {
+  const router = useRouter();
+  const [body, setBody] = useState("");
+
+  async function handleSubmit() {
+    const reply = {
+      id: uuid(),
+      user_id: session.user.id,
+      question_id: question,
+      body,
+    }
+
+    const { data, error } = await supabase.from('replies').insert([reply]);
+
+    if (error) {
+      alert('Insertion failed');
+      console.error(error.message);
+      return;
+    }
+
+    router.push(`/questions/${question}`);
+  }
+
   return (
     <>
       <Head>
@@ -11,9 +37,13 @@ export default function New({ session }) {
         <meta charset="utf-8" />
       </Head>
       <div className="bg-gray-50 min-h-screen w-full max-w-md mx-auto flex flex-col">
-        <NewHeader reply/>
+        <NewHeader reply handleSubmit={handleSubmit} />
         <main className="mt-4 flex-grow mb-32">
-          <textarea className="bg-transparent px-4 w-full outline-none resize-none" placeholder="Explain your question... "></textarea>
+          <textarea
+            className="bg-transparent px-4 w-full outline-none resize-none"
+            placeholder="Explain your question... "
+            onChange={(event) => setBody(event.target.value)}
+          />
         </main>
       </div>
     </>
@@ -32,9 +62,13 @@ export const getServerSideProps = async ({ req, params }) => {
     };
   }
 
+  const { data: user } = await supabase.from('users').select('*').eq('email', session.user.email).single();
+  session.user = user;
+
   return {
     props: {
       session,
+      question: params.id,
     },
   };
 };

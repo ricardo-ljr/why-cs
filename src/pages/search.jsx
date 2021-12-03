@@ -5,52 +5,19 @@ import { getSession } from "next-auth/client";
 import { Header } from "../components/Header";
 import { ActionBar } from "../components/ActionBar";
 import { Question } from "../components/Question";
+import { supabase } from "../services/supabase";
 
-const questions = [
-  {
-    user: {
-      name: "Student Name",
-      image: "https://ui-avatars.com/api/?name=Student+Name&background=random",
-    },
-    title: "How to swap two values in an array?",
-    answered: false,
-    course: "CS 142",
-    replies: 0,
-  },
-  {
-    user: {
-      name: "Student Name",
-      image: "https://ui-avatars.com/api/?name=Student+Name&background=random",
-    },
-    title: "How to free a memory address in C?",
-    answered: true,
-    course: "CS 224",
-    replies: 10,
-  },
-  {
-    user: {
-      name: "Student Name",
-      image: "https://ui-avatars.com/api/?name=Student+Name&background=random",
-    },
-    title: "How do I SSH into the lab machine?",
-    answered: false,
-    course: "CS 236",
-    replies: 5,
-  },
-]; 
-
-export default function Search({ session }) {
+export default function Search({ session, questions }) {
   const [filteredQuestions, setFilteredQuestions] = useState([]);
 
   function searchQuestions(event) {
-    const search = event.target.value;
+    const search = event.target.value.toLowerCase();
 
     if (!search) {
-      console.log(search);
       setFilteredQuestions([]);
     }
 
-    const results = questions.filter((question) => question.title.includes(search) || question.course.includes(search));
+    const results = questions.filter((question) => question.title.toLowerCase().includes(search) || question.course.toLowerCase().includes(search));
 
     setFilteredQuestions(results);
   }
@@ -89,9 +56,22 @@ export const getServerSideProps = async ({ req, params }) => {
     };
   }
 
+  const { data: user } = await supabase.from('users').select('*').eq('email', session.user.email).single();
+  session.user = user;
+
+  const { data: questions, error } = await supabase
+    .from('questions')
+    .select('id, title, course, user:user_id (id, name, image), answered, replies')
+    .neq('user_id', user.id)
+
+  if (error) {
+    console.log(error);
+  }
+
   return {
     props: {
       session,
+      questions,
     },
   };
 };

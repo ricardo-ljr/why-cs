@@ -2,9 +2,9 @@ import Head from "next/head";
 import { getSession } from "next-auth/client";
 
 import { Header } from "../components/Header";
-import { ActionBar } from "../components/ActionBar";
+import { supabase } from "../services/supabase";
 import { Question } from "../components/Question";
-import { useState } from "react";
+import { ActionBar } from "../components/ActionBar";
 
 const questions = [
   {
@@ -74,6 +74,9 @@ export const getServerSideProps = async ({ req, params }) => {
       },
     };
   }
+
+  const { data: user } = await supabase.from('users').select('*').eq('email', session.user.email).single();
+  session.user = user;
 
   return {
     props: {

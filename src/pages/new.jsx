@@ -1,15 +1,18 @@
 import Head from "next/head";
+import { useState } from "react";
+import { v4 as uuid } from "uuid";
+import { useRouter } from "next/router";
 import { getSession } from "next-auth/client";
 
 import { NewHeader } from "../components/NewHeader";
-import { useState } from "react";
+import { supabase } from "../services/supabase";
 
 export default function New({ session }) {
+  const router = useRouter();
+
   const [question, setQuestion] = useState({
-    user: {
-      name: session.user.name,
-      image: session.user.image,
-    },
+    id: uuid(),
+    user_id: session.user.id,
     title: "",
     body: "",
     answered: false,
@@ -34,8 +37,16 @@ export default function New({ session }) {
     setQuestion(newQuestion);
   }
 
-  function handleSubmit() {
-    console.log(question);
+  async function handleSubmit() {
+    const { data, error } = await supabase.from('questions').insert([question]);
+
+    if (error) {
+      alert('Insertion failed');
+      console.error(error.message);
+      return;
+    }
+
+    router.push(`/questions/${question.id}`);
   }
 
   return (
@@ -65,6 +76,9 @@ export const getServerSideProps = async ({ req, params }) => {
       },
     };
   }
+
+  const { data: user } = await supabase.from('users').select('*').eq('email', session.user.email).single();
+  session.user = user;
 
   return {
     props: {

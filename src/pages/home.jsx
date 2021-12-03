@@ -1,45 +1,14 @@
 import Head from "next/head";
 import { getSession } from "next-auth/client";
+import { v4 as uuid } from 'uuid';
 
+import { supabase } from '../services/supabase';
 import { HomeHeader } from "../components/HomeHeader";
 import { ActionBar } from "../components/ActionBar";
 import { HomeCard } from "../components/HomeCard";
 import { Question } from "../components/Question";
 
-const questions = [
-  {
-    user: {
-      name: "Student Name",
-      image: "https://ui-avatars.com/api/?name=Student+Name&background=random",
-    },
-    title: "How to swap two values in an array?",
-    answered: false,
-    course: "CS 142",
-    replies: 0,
-  },
-  {
-    user: {
-      name: "Student Name",
-      image: "https://ui-avatars.com/api/?name=Student+Name&background=random",
-    },
-    title: "How to free a memory address in C?",
-    answered: false,
-    course: "CS 224",
-    replies: 0,
-  },
-  {
-    user: {
-      name: "Student Name",
-      image: "https://ui-avatars.com/api/?name=Student+Name&background=random",
-    },
-    title: "How do I SSH into the lab machine?",
-    answered: false,
-    course: "CS 236",
-    replies: 0,
-  },
-];
-
-export default function Home({ session }) {
+export default function Home({ session, questions }) {
   return (
     <>
       <Head>
@@ -52,17 +21,17 @@ export default function Home({ session }) {
             <HomeCard type="questions" />
             <HomeCard type="replies" />
           </section>
-          <section className="mt-8">
+          {!!questions.length && <section className="mt-8">
             <h2 className="text-xl font-bold px-4">Be the First to Answer</h2>
 
-            {questions.map((question, id) => (
+            {questions.map((question) => (
               <Question
-                key={id}
+                key={question.id}
                 question={question}
                 answered={question.answered}
               />
             ))}
-          </section>
+          </section>}
         </main>
         <ActionBar />
       </div>
@@ -82,9 +51,29 @@ export const getServerSideProps = async ({ req, params }) => {
     };
   }
 
+  let { data: user } = await supabase.from('users').select('*').eq('email', session.user.email).single();
+
+  if (!user) {
+    const { data } = await supabase.from('users').insert({ ...session.user, id: uuid() }).single();
+    user = data;
+  }
+
+  session.user = user;
+
+  const { data: questions, error } = await supabase
+    .from('questions')
+    .select('id, title, course, user:user_id (id, name, image), answered, replies')
+    .eq('replies', 0)
+    .neq('user_id', user.id)
+
+  if (error) {
+    console.log(error);
+  }
+
   return {
     props: {
       session,
+      questions,
     },
   };
 };
