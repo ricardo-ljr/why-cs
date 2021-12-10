@@ -7,7 +7,7 @@ import { getSession } from "next-auth/client";
 import { NewHeader } from "../components/NewHeader";
 import { supabase } from "../services/supabase";
 
-export default function New({ session }) {
+export default function New({ session, courses }) {
   const router = useRouter();
 
   const [question, setQuestion] = useState({
@@ -56,7 +56,7 @@ export default function New({ session }) {
         <meta charset="utf-8" />
       </Head>
       <div className="bg-gray-50 min-h-screen w-full max-w-md mx-auto flex flex-col">
-        <NewHeader user={session.user} setTitle={setTitle} setClass={setClass} handleSubmit={handleSubmit} />
+        <NewHeader courses={courses} user={session.user} setTitle={setTitle} setClass={setClass} handleSubmit={handleSubmit} />
         <main className="mt-4 flex-grow mb-32">
           <textarea className="bg-transparent px-4 w-full outline-none resize-none" onChange={setBody} placeholder="Explain your question... "></textarea>
         </main>
@@ -80,9 +80,12 @@ export const getServerSideProps = async ({ req, params }) => {
   const { data: user } = await supabase.from('users').select('*').eq('email', session.user.email).single();
   session.user = user;
 
+  const { data: courses } = await supabase.from('courses').select('*');
+
   return {
     props: {
       session,
+      courses,
     },
   };
 };
