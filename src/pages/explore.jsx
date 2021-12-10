@@ -50,7 +50,7 @@ export const getServerSideProps = async ({ req, params }) => {
     .neq('user_id', user.id)
 
   if (error) {
-    console.log(error);
+    console.error(error);
   }
 
   return {

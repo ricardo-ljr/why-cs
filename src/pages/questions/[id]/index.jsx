@@ -47,7 +47,7 @@ export const getServerSideProps = async ({ req, params }) => {
     .single()
 
   if (questionError) {
-    console.log(questionError);
+    console.error(questionError);
   }
 
   const { data: replies, error: repliesError } = await supabase
@@ -56,7 +56,7 @@ export const getServerSideProps = async ({ req, params }) => {
     .eq('question_id', params.id)
 
   if (repliesError) {
-    console.log(repliesError);
+    console.error(repliesError);
   }
 
   return {
