@@ -2,11 +2,13 @@ import Link from "next/link";
 import { signOut } from "next-auth/client";
 import { FiBell, FiLogOut } from "react-icons/fi";
 
-export function HomeHeader({ user }) {
+export function HomeHeader({ user, profile = false }) {
+  const title = !profile ? "Home" : "Profile" 
+
   return (
     <header className="bg-white w-full p-4 shadow-lg">
       <section className="flex justify-between items-center">
-        <h1 className="text-xl font-bold">Home</h1>
+        <h1 className="text-xl font-bold">{title}</h1>
         <nav className="flex gap-4">
           <Link href="/">
             <a className="text-blue-700">
