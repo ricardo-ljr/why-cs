@@ -6,40 +6,7 @@ import { supabase } from "../services/supabase";
 import { Question } from "../components/Question";
 import { ActionBar } from "../components/ActionBar";
 
-const questions = [
-  {
-    user: {
-      name: "Student Name",
-      image: "https://ui-avatars.com/api/?name=Student+Name&background=random",
-    },
-    title: "How to swap two values in an array?",
-    answered: false,
-    course: "CS 142",
-    replies: 1,
-  },
-  {
-    user: {
-      name: "Student Name",
-      image: "https://ui-avatars.com/api/?name=Student+Name&background=random",
-    },
-    title: "How to free a memory address in C?",
-    answered: true,
-    course: "CS 224",
-    replies: 10,
-  },
-  {
-    user: {
-      name: "Student Name",
-      image: "https://ui-avatars.com/api/?name=Student+Name&background=random",
-    },
-    title: "How do I SSH into the lab machine?",
-    answered: false,
-    course: "CS 236",
-    replies: 5,
-  },
-];
-
-export default function Replies({ session }) {
+export default function Replies({ session, questions }) {
   
   return (
     <>
@@ -81,6 +48,7 @@ export const getServerSideProps = async ({ req, params }) => {
   return {
     props: {
       session,
+      questions: [],
     },
   };
 };
