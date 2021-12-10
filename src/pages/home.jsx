@@ -8,7 +8,7 @@ import { ActionBar } from "../components/ActionBar";
 import { HomeCard } from "../components/HomeCard";
 import { Question } from "../components/Question";
 
-export default function Home({ session, questions }) {
+export default function Home({ session, questions, feed }) {
   return (
     <>
       <Head>
@@ -21,9 +21,20 @@ export default function Home({ session, questions }) {
             <HomeCard type="questions" />
             <HomeCard type="replies" />
           </section>
+
+          {!!feed.length && <section className="mt-8">
+            <h2 className="text-xl font-bold px-4">Questions in Your Courses</h2>
+            {feed.map((question) => (
+              <Question
+                key={question.id}
+                question={question}
+                answered={question.answered}
+              />
+            ))}
+          </section>}
+          
           {!!questions.length && <section className="mt-8">
             <h2 className="text-xl font-bold px-4">Be the First to Answer</h2>
-
             {questions.map((question) => (
               <Question
                 key={question.id}
@@ -65,15 +76,28 @@ export const getServerSideProps = async ({ req, params }) => {
     .select('id, title, course, user:user_id (id, name, image), answered, replies')
     .eq('replies', 0)
     .neq('user_id', user.id)
+    .order('created_at')
+    .limit(3);
 
   if (error) {
-    console.log(error);
+    console.error(error);
   }
+
+  const { data } = await supabase.from('users_courses').select('course:course_id (name)').eq('user_id', user.id);
+  const user_courses = data.map(({ course }) => course.name);
+
+  let { data: feed } = await supabase
+  .from('questions')
+  .select('id, title, course, user:user_id (id, name, image), answered, replies')
+  .neq('user_id', user.id);
+
+  feed = feed.filter((question) => user_courses.includes(question.course));
 
   return {
     props: {
       session,
       questions,
+      feed,
     },
   };
 };

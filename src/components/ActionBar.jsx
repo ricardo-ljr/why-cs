@@ -1,6 +1,6 @@
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
-import { FiHome, FiCompass, FiSearch, FiEdit } from "react-icons/fi";
+import { FiHome, FiCompass, FiSearch, FiEdit, FiUser } from "react-icons/fi";
 
 export function ActionBar({ reply = false }) {
   const router = useRouter();
@@ -26,8 +26,8 @@ export function ActionBar({ reply = false }) {
               router.pathname === "/home" ? "blue-700" : "gray-500"
             } flex flex-col items-center`}
           >
-            <FiHome size={28} />
-            <span>Home</span>
+            <FiHome size={20} />
+            <span className="text-sm mt-1">Home</span>
           </a>
         </Link>
         <Link href="/explore">
@@ -36,8 +36,8 @@ export function ActionBar({ reply = false }) {
               router.pathname === "/explore" ? "blue-700" : "gray-500"
             } flex flex-col items-center`}
           >
-            <FiCompass size={28} />
-            <span>Explore</span>
+            <FiCompass size={20} />
+            <span className="text-sm mt-1">Explore</span>
           </a>
         </Link>
         <Link href="/search">
@@ -46,8 +46,8 @@ export function ActionBar({ reply = false }) {
               router.pathname === "/search" ? "blue-700" : "gray-500"
             } flex flex-col items-center`}
           >
-            <FiSearch size={28} />
-            <span>Search</span>
+            <FiSearch size={20} />
+            <span className="text-sm mt-1">Search</span>
           </a>
         </Link>
         <Link href="/new">
@@ -56,8 +56,18 @@ export function ActionBar({ reply = false }) {
               router.pathname === "/new" ? "blue-700" : "gray-500"
             } flex flex-col items-center`}
           >
-            <FiEdit size={28} />
-            <span>Post</span>
+            <FiEdit size={20} />
+            <span className="text-sm mt-1">Post</span>
+          </a>
+        </Link>
+        <Link href="/profile">
+          <a
+            className={`text-${
+              router.pathname === "/profile" ? "blue-700" : "gray-500"
+            } flex flex-col items-center`}
+          >
+            <FiUser size={20} />
+            <span className="text-sm mt-1">Profile</span>
           </a>
         </Link>
       </nav>
