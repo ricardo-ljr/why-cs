@@ -10,7 +10,7 @@ export default function Notifications({ session }) {
       <Head>
         <title>Why CS? - Notifications</title>
       </Head>
-      <div className="bg-gray-50 min-h-full w-full max-w-md mx-auto flex flex-col">
+      <div className="bg-gray-50 min-h-screen w-full max-w-md mx-auto flex flex-col">
         <Header title="Notifications" />
         <main className="mt-4 flex-grow mb-32">
           {/* Notifications component */}
