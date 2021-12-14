@@ -4,6 +4,15 @@ import { FiArrowLeft, FiMoreHorizontal, FiHelpCircle, FiCheckCircle } from "reac
 export function QuestionHeader({ question, user, open, toggleMenu, editQuestion, deleteQuestion, toggleQuestion }) {
   const router = useRouter();
 
+  function back() {
+    if (user.email === question.user.email) {
+      router.push('/my-questions');
+      return;
+    }
+
+    router.push('/explore');
+  }
+
   return (
     <>
       <section className={`
@@ -35,7 +44,7 @@ export function QuestionHeader({ question, user, open, toggleMenu, editQuestion,
       <header className="bg-white w-full p-4 shadow-lg">
         <section className="flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <button className="text-gray-800" onClick={router.back}>
+            <button className="text-gray-800" onClick={back}>
               <FiArrowLeft size={24} />
             </button>
             <h1 className="text-xl font-bold">{question.course}</h1>

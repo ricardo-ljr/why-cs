@@ -6,11 +6,15 @@ import { FiBell, FiArrowLeft, FiLogOut } from "react-icons/fi";
 export function Header({ title, searchQuestions = undefined }) {
   const router = useRouter();
 
+  function backToExplore() {
+    router.push('/explore');
+  }
+
   if (title === 'Search') {
     return (
       <header className="bg-white w-full p-4 shadow-lg">
       <section className="flex gap-3 items-center">
-        <button className="text-gray-800" onClick={router.back}>
+        <button className="text-gray-800" onClick={backToExplore}>
           <FiArrowLeft size={24} />
         </button>
         <input
