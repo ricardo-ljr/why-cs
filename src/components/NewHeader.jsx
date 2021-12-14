@@ -19,7 +19,7 @@ export function NewHeader({ courses, setTitle, setClass, handleSubmit, reply = f
       </section>
       {!reply && <section className="mt-8 flex flex-col gap-4">
         <input type="text" placeholder="Title" className="w-full outline-none" onChange={setTitle} defaultValue={!!question ? question.title : ''}/>
-        <select className="w-full text-gray-400 px-0 outline-none" onChange={setClass}>
+        <select className="w-full text-gray-400 px-0 outline-none bg-white" onChange={setClass}>
             {!question && <option defaultChecked value="">Class</option>}
           {courses.map((course) => (
             <option key={course} value={course} defaultChecked={!!question && question.course === course}>{course}</option>
