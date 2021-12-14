@@ -28,8 +28,9 @@ export default function New({ session, questionId }) {
     }
 
     const { data: question } = await supabase.from('questions').select('*').eq('id', questionId).single();
-
     await supabase.from('questions').update({ replies: question.replies + 1 }).eq('id', questionId);
+
+    alert('Reply submitted successfully!');
 
     router.push(`/questions/${questionId}`);
   }

@@ -38,13 +38,15 @@ export default function New({ session, courses }) {
   }
 
   async function handleSubmit() {
-    const { data, error } = await supabase.from('questions').insert([question]);
+    const { error } = await supabase.from('questions').insert([question]);
 
     if (error) {
       alert('Insertion failed');
       console.error(error.message);
       return;
     }
+
+    alert('Question submitted successfully!');
 
     router.push(`/questions/${question.id}`);
   }

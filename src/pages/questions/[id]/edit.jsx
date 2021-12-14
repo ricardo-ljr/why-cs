@@ -43,6 +43,8 @@ export default function Edit({ session, question, courses }) {
       return;
     }
 
+    alert('Question updated successfully!');
+
     router.push(`/questions/${question.id}`);
   }
 
