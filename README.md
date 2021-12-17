@@ -8,16 +8,6 @@ A question and answer PWA for BYU Computer Science students find help to complet
 - [Tailwind](https://tailwindcss.com/)
 - [Supabase](https://supabase.com/)
 
-## 🛠 Setup
-
-```sh
-git clone https://github.com/lucasamonrc/why-cs.git
-cd why-cs
-yarn
-yarn build
-yarn start 
-```
-
 ## 🎥 Project Demo
 
 <iframe
@@ -41,7 +31,7 @@ We’ve also started realizing that our problem statement could also affect teac
 
 We strongly believe that our application can positively impact the lives of any student and teaching assistant that starts using it. We are promoting an environment in which they can learn and study from, search up quick questions and answers from all available computer science classes, as well as empower them with a tool that will enhance their learning and teaching assistant position.
 
-## User Evaluations
+## 🙋‍♀️ User Evaluations
 
 Our user evaluations helped us validate our problem statement, allowed us to narrow down the most desired features that we should implement and helped us integrate tasks that would be not confusing for users to perform. Next, we have a brief discussion of each round, our findings and what we decided to address and not address.
 
