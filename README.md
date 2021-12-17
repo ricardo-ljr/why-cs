@@ -73,6 +73,7 @@ Summarized addressed:
 ## 📋 Meta
 
 Lucas Castro – [lucasacastro.dev](https://www.lucasacastro.dev) – lucasamonrc@gmail.com
+
 Ricardo Leite – ricardo.leitejr@hotmail.com
 
 [@lucasamonrc](https://github.com/lucasamonrc)
